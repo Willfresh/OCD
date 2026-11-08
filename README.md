@@ -111,6 +111,7 @@ L'espace d'administration de l'équipe House of Challenge. **Accès** : lien « 
 - **Réservations** : tableau complet avec recherche (nom, produit, référence), filtre par statut, changement de statut (Confirmée / En attente / Annulée), fiche détaillée, **bouton WhatsApp par client** (message pré-rempli), suppression (double clic de confirmation) et **export CSV / JSON**.
 - **Créneaux & calendrier** : calendrier de décembre 2026 avec occupation réelle de chaque jour ; cliquez un jour pour voir ses 8 créneaux (libres ou réservés, avec le nom du client) et changer son état — **complet, presque complet, fermé ou ouvert** — ce qui se répercute immédiatement sur le calendrier public de la page de réservation (sur le même navigateur).
 - **Paramètres** : numéro WhatsApp affiché sur le site, rechargement du jeu de démonstration, remise à zéro des données.
+- **Totalement responsive** : sous 900 px la navigation devient une rangée d'onglets défilants ; sous 720 px le tableau des réservations se transforme en **cartes empilées** (chaque ligne affiche son libellé — Réf., Client, Montant, Statut… — et les boutons d'action restent accessibles au pouce) ; la barre supérieure s'organise sur deux rangées propres et le calendrier passe en cellules compactes. Vérifié de 320 px à 1920 px, thèmes clair et sombre, sans aucun débordement.
 
 ### Comment les données circulent (démonstration locale)
 

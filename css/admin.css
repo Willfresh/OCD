@@ -148,18 +148,19 @@ td.bk-amt{font-weight:800;white-space:nowrap}
 .adm-legend .lg-near{border-color:var(--soft-line)}
 .adm-legend .lg-full{border-style:dashed;opacity:.5}
 .adm-legend .lg-closed{background:var(--cal-closed-bg);opacity:.5}
-.adm-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.adm-cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
 .adm-dow{font-size:.64rem;font-weight:800;color:var(--muted);text-align:center;letter-spacing:.06em;padding-bottom:4px;text-transform:uppercase}
 .adm-day{position:relative;border:1.5px solid var(--line);border-radius:12px;background:transparent;padding:7px 6px;min-height:58px;display:flex;flex-direction:column;justify-content:space-between;gap:4px;cursor:pointer;font:inherit;color:var(--text);text-align:left;transition:border-color .25s,transform .2s,background .25s}
 .adm-day:hover{border-color:var(--orange);transform:translateY(-2px)}
 .adm-day.sel{border-color:var(--orange);background:var(--kicker-bg);box-shadow:0 10px 26px var(--glow)}
-.adm-day .d-top{display:flex;justify-content:space-between;align-items:baseline;gap:4px}
+.adm-day .d-top{display:flex;justify-content:space-between;align-items:baseline;gap:4px;overflow:hidden}
+.adm-day.closed .d-occ{display:none}
 .adm-day .d-num{font-weight:800;font-size:.9rem}
 .adm-day .d-occ{font-size:.6rem;color:var(--muted);white-space:nowrap}
 .adm-day .d-bar{height:5px;border-radius:99px;background:var(--cal-closed-bg);overflow:hidden}
 .adm-day .d-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--orange-deep),var(--orange-3));border-radius:99px;transition:width .5s ease}
 .adm-day.near{border-color:var(--soft-line)}
-.adm-day.full .d-num::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#E23D3D;margin-left:6px;vertical-align:2px}
+.adm-day.full::after{content:"";position:absolute;top:5px;right:5px;width:5px;height:5px;border-radius:50%;background:#E23D3D}
 .adm-day.closed{opacity:.5}
 .adm-day.closed .d-num{text-decoration:line-through}
 .adm-day.off{visibility:hidden;pointer-events:none}
@@ -197,14 +198,37 @@ html[data-theme="dark"] .adm-saved{color:#5EC97D}
 
 /* ---------- Responsive ---------- */
 @media(max-width:960px){
-.adm-shell{grid-template-columns:1fr}
-.adm-side{position:static;min-height:0;border-right:none;border-bottom:1px solid var(--line);padding:10px 12px}
+.adm-shell{grid-template-columns:minmax(0,1fr)}
+.adm-side{position:static;min-height:0;min-width:0;border-right:none;border-bottom:1px solid var(--line);padding:10px 12px}
 .adm-nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin}
-.adm-nav-btn{border-left:none;border-radius:12px;padding:9px 13px;white-space:nowrap;flex:none}
+.adm-nav-btn{width:auto;border-left:none;border-radius:12px;padding:9px 13px;white-space:nowrap;flex:none}
 .adm-side-foot{display:none}
-.adm-main{padding:20px 14px 56px}
+.adm-main{padding:20px 14px 56px;min-width:0}
 }
 @media(max-width:1050px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){
+/* Tableau → cartes empilées */
+.tbl-wrap{overflow-x:visible}
+.adm-table,.adm-table tbody,.adm-table tr,.adm-table td{display:block}
+.adm-table{min-width:0}
+.adm-table thead{display:none}
+.adm-table tbody tr{border:1px solid var(--line);border-radius:16px;padding:2px;margin-bottom:12px}
+.adm-table tbody tr:hover{background:transparent}
+.adm-table tbody tr:last-child{margin-bottom:0}
+.adm-table td{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px dashed var(--line);padding:10px 12px;text-align:right}
+.adm-table td:last-child{border-bottom:none}
+.adm-table td::before{content:attr(data-label);font-size:.64rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;flex:none}
+.adm-table td[colspan]{display:block;text-align:center}
+.adm-table td[colspan]::before{content:none}
+td.bk-client{flex-direction:column;align-items:flex-end;gap:2px}
+td.bk-client small{white-space:normal}
+}
+@media(max-width:640px){
+/* Barre supérieure : marque puis actions sur une 2e rangée */
+.adm-topbar{flex-wrap:wrap;row-gap:9px}
+.adm-top-actions{width:100%;margin-left:0;justify-content:space-between;gap:8px}
+.adm-top-actions .btn-sm{white-space:nowrap}
+}
 @media(max-width:560px){
 .adm-badge{display:none}
 .btn-sm{padding:8px 12px;font-size:.78rem}
@@ -213,4 +237,15 @@ html[data-theme="dark"] .adm-saved{color:#5EC97D}
 .adm-tools{align-items:stretch}
 .adm-tools select{flex:1}
 .day-slots{grid-template-columns:1fr}
+.recent-item{flex-wrap:wrap;row-gap:6px}
+.recent-item .pill-st{margin-left:auto}
+}
+@media(max-width:480px){
+.adm-cal{gap:3px}
+.adm-day{min-height:46px;padding:4px 3px;border-radius:8px}
+.adm-day .d-top{gap:2px}
+.adm-day .d-num{font-size:.72rem}
+.adm-day .d-occ{font-size:.52rem}
+.adm-day.full .d-num::after{width:4px;height:4px;margin-left:3px}
+.adm-main{padding:18px 10px 48px}
 }

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Espace régie — OCD Live</title>
+  <meta name="description" content="Tableau de bord de la régie OCD Live : réservations, calendrier des créneaux, recettes et paramètres du service de lives TikTok.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FA4900'/%3E%3Ctext x='32' y='46' font-family='Arial' font-size='36' font-weight='900' text-anchor='middle' fill='%230A0908'%3EO%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#FFF9F1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script>(function(){try{var t=localStorage.getItem('ocd-theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-page">
+
+<!-- ============ Écran de connexion ============ -->
+<div class="adm-login" id="adm-login">
+  <div class="adm-login-card">
+    <a class="brand" href="index.html" aria-label="OCD Live — retour à l'accueil"><img class="brand-logo" src="assets/logo-ocd.png" alt="OCD — L'Opportunité C'est Dehors"><span class="b-live">LIVE</span></a>
+    <p class="adm-login-k">House of Challenge — régie</p>
+    <h1 class="adm-login-title">Espace régie</h1>
+    <p class="adm-login-sub">Pilotage du service OCD Live : réservations, calendrier des créneaux, recettes et paramètres.</p>
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="adm-code">Code d'accès régie</label>
+        <input id="adm-code" type="password" autocomplete="off" placeholder="••••••">
+        <p class="ferr"></p>
+      </div>
+      <button type="submit" class="btn btn-primary adm-login-btn">Entrer dans le tableau de bord</button>
+    </form>
+    <p class="adm-demo">Démonstration — code&nbsp;: <b>OCD2026</b>. Connexion simulée, aucune donnée réelle n'est envoyée.</p>
+    <a class="adm-back" href="index.html">← Retour au site</a>
+  </div>
+</div>
+
+<!-- ============ Application ============ -->
+<div class="adm-app" id="adm-app" hidden>
+  <header class="adm-topbar">
+    <a class="brand" href="index.html" aria-label="OCD Live — retour à l'accueil"><img class="brand-logo" src="assets/logo-ocd.png" alt="OCD — L'Opportunité C'est Dehors"><span class="b-live">LIVE</span></a>
+    <span class="adm-badge">Espace régie</span>
+    <div class="adm-top-actions">
+      <a class="btn btn-ghost btn-sm" href="index.html">Voir le site</a>
+      <button class="theme-btn" id="theme-toggle" type="button" aria-label="Activer le thème sombre" title="Changer de thème">
+        <svg class="ic-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="ic-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="btn btn-ghost btn-sm" id="btn-logout" type="button">Déconnexion</button>
+    </div>
+  </header>
+
+  <div class="adm-shell">
+    <aside class="adm-side">
+      <nav class="adm-nav" aria-label="Sections du tableau de bord">
+        <button class="adm-nav-btn on" data-view="overview" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Vue d'ensemble</span>
+        </button>
+        <button class="adm-nav-btn" data-view="bookings" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+          <span>Réservations</span>
+          <span class="adm-nav-badge" id="nav-badge" hidden></span>
+        </button>
+        <button class="adm-nav-btn" data-view="slots" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Créneaux &amp; calendrier</span>
+        </button>
+        <button class="adm-nav-btn" data-view="settings" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          <span>Paramètres</span>
+        </button>
+      </nav>
+      <div class="adm-side-foot">
+        <p><strong>OCD Live</strong> — régie House of Challenge, Lomé (Togo).</p>
+        <p>Démonstration locale : les données restent sur cet appareil (navigateur).</p>
+      </div>
+    </aside>
+
+    <main class="adm-main">
+
+      <!-- ===== Vue d'ensemble ===== -->
+      <section class="adm-view on" data-view="overview">
+        <div class="adm-view-head">
+          <div>
+            <h1>Vue d'ensemble</h1>
+            <p class="adm-sub">Activité du service — décembre 2026, antenne de Lomé (heure GMT+0).</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-refresh" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            Actualiser
+          </button>
+        </div>
+        <div class="stat-grid" id="stat-grid"></div>
+        <div class="adm-cols">
+          <div class="adm-panel">
+            <h2>Réservations par package</h2>
+            <div class="bar-chart" id="chart-pkg"></div>
+          </div>
+          <div class="adm-panel">
+            <h2>Remplissage du calendrier</h2>
+            <div class="col-chart" id="chart-days"></div>
+            <p class="chart-note">Chaque colonne est un jour de décembre 2026 — cliquez pour ouvrir la gestion des créneaux. Les colonnes grisées sont fermées (dimanches et jours de fermeture).</p>
+          </div>
+        </div>
+        <div class="adm-panel">
+          <div class="adm-panel-head">
+            <h2>Dernières réservations</h2>
+            <button class="btn btn-ghost btn-sm" data-goto="bookings" type="button">Tout voir</button>
+          </div>
+          <div class="recent-list" id="recent-list"></div>
+        </div>
+      </section>
+
+      <!-- ===== Réservations ===== -->
+      <section class="adm-view" data-view="bookings">
+        <div class="adm-view-head">
+          <div>
+            <h1>Réservations</h1>
+            <p class="adm-sub">Suivi complet des demandes : recherchez, contactez le client sur WhatsApp, changez le statut, exportez la liste.</p>
+          </div>
+        </div>
+        <div class="adm-tools">
+          <div class="adm-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="bk-search" type="search" placeholder="Rechercher — nom, produit, référence…" aria-label="Rechercher une réservation">
+          </div>
+          <select id="bk-status" aria-label="Filtrer par statut">
+            <option value="">Tous les statuts</option>
+            <option value="confirmee">Confirmées</option>
+            <option value="attente">En attente</option>
+            <option value="annulee">Annulées</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" id="bk-export-csv" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV
+          </button>
+          <button class="btn btn-ghost btn-sm" id="bk-export-json" type="button">JSON</button>
+        </div>
+        <div class="adm-panel tbl-wrap">
+          <table class="adm-table">
+            <thead>
+              <tr>
+                <th>Réf.</th><th>Client</th><th>Produit</th><th>Date</th><th>Créneau</th><th>Package</th><th>Montant</th><th>Statut</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="bk-body"></tbody>
+          </table>
+        </div>
+        <p class="adm-count" id="bk-count"></p>
+      </section>
+
+      <!-- ===== Créneaux & calendrier ===== -->
+      <section class="adm-view" data-view="slots">
+        <div class="adm-view-head">
+          <div>
+            <h1>Créneaux &amp; calendrier</h1>
+            <p class="adm-sub">Décembre 2026 — 8 créneaux de 1h30 par jour, heure de Lomé (GMT+0). Cliquez sur un jour pour voir ses créneaux et gérer son ouverture.</p>
+          </div>
+        </div>
+        <div class="adm-panel">
+          <div class="adm-cal-head">
+            <span class="adm-cal-title">Décembre 2026</span>
+            <div class="adm-legend">
+              <span><i class="lg-av"></i>Disponible</span>
+              <span><i class="lg-near"></i>Presque complet</span>
+              <span><i class="lg-full"></i>Complet</span>
+              <span><i class="lg-closed"></i>Fermé</span>
+            </div>
+          </div>
+          <div class="adm-cal" id="adm-cal"></div>
+        </div>
+        <div class="adm-panel" id="day-panel" hidden>
+          <div class="adm-panel-head">
+            <h2 id="day-title">Jour sélectionné</h2>
+            <div class="adm-day-actions">
+              <button class="btn btn-ghost btn-sm" id="day-full" type="button">Marquer complet</button>
+              <button class="btn btn-ghost btn-sm" id="day-near" type="button">Presque complet</button>
+              <button class="btn btn-ghost btn-sm" id="day-open" type="button">Rouvrir normalement</button>
+              <button class="btn btn-ghost btn-sm" id="day-close" type="button">Fermer le jour</button>
+            </div>
+          </div>
+          <p class="adm-day-note" id="day-state">—</p>
+          <div class="day-slots" id="day-slots"></div>
+        </div>
+      </section>
+
+      <!-- ===== Paramètres ===== -->
+      <section class="adm-view" data-view="settings">
+        <div class="adm-view-head">
+          <div>
+            <h1>Paramètres</h1>
+            <p class="adm-sub">Réglages du service visibles côté public — appliqués immédiatement sur ce navigateur.</p>
+          </div>
+        </div>
+        <div class="adm-panel">
+          <h2>Coordonnées de la régie</h2>
+          <div class="field adm-field">
+            <label for="set-wa">Numéro WhatsApp affiché sur le site</label>
+            <input id="set-wa" type="tel" inputmode="tel" placeholder="+49 176 584 43070">
+          </div>
+          <p class="adm-hint">Appliqué aux boutons WhatsApp de l'accueil et de la page de réservation <strong>sur ce navigateur</strong> (utile pour tester). Pour tous les visiteurs, modifiez <code>wa.me/…</code> dans <code>index.html</code>, <code>reservation.html</code> et <code>js/resa.js</code> — voir le README.</p>
+          <div class="adm-actions-row">
+            <button class="btn btn-primary" id="set-save" type="button">Enregistrer</button>
+            <button class="btn btn-ghost" id="set-reset" type="button">Rétablir +49 176 584 43070</button>
+            <span class="adm-saved" id="set-saved" hidden>Enregistré !</span>
+          </div>
+        </div>
+        <div class="adm-panel">
+          <h2>Données de démonstration</h2>
+          <p class="adm-p">Les réservations réalisées depuis la page <code>reservation.html</code> apparaissent ici automatiquement, marquées <strong>« Nouvelle »</strong>. Un jeu de démonstration pré-rempli le tableau pour la première visite. Les états de jours (complet, fermé…) modifiés dans « Créneaux » s'appliquent au calendrier public de ce navigateur.</p>
+          <div class="adm-actions-row">
+            <button class="btn btn-ghost" id="data-reset" type="button">Recharger le jeu de démo</button>
+            <button class="btn btn-ghost" id="data-clear" type="button">Tout effacer</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ Modal détail réservation ============ -->
+<div class="modal" id="adm-modal" aria-hidden="true">
+  <div class="modal-overlay" data-close></div>
+  <div class="modal-panel adm-modal-panel">
+    <button class="modal-close" data-close type="button" aria-label="Fermer le détail">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="adm-modal-body"></div>
+  </div>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

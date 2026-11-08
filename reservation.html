@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réserver votre live — OCD Live</title>
+  <meta name="description" content="Réservez votre créneau de live TikTok avec OCD Live : mode, date, créneau, package, informations puis paiement — étape par étape, confirmation immédiate.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23FA4900'/%3E%3Ctext x='32' y='46' font-family='Arial' font-size='36' font-weight='900' text-anchor='middle' fill='%230A0908'%3EO%3C/text%3E%3C/svg%3E">
+  <meta name="theme-color" content="#FFF9F1">
+  <script>document.documentElement.classList.add('js');</script>
+  <script>(function(){try{var t=localStorage.getItem('ocd-theme');document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/resa.css">
+</head>
+<body class="resa-page">
+
+<header class="site-header scrolled" id="site-header">
+  <a class="brand" href="index.html" aria-label="OCD Live — retour à l'accueil"><img class="brand-logo" src="assets/logo-ocd.png" alt="OCD — L'Opportunité C'est Dehors"><span class="b-live">LIVE</span></a>
+  <div class="resa-nav">
+    <a class="btn btn-ghost btn-back" href="index.html">← Accueil</a>
+    <button class="theme-btn" id="theme-toggle" type="button" aria-label="Activer le thème sombre" title="Changer de thème">
+      <svg class="ic-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="resa-main" id="resa-main">
+  <p class="eyebrow">Réservation</p>
+  <h1 class="resa-title">Réservez votre live, étape par étape</h1>
+  <p class="resa-sub">Mode, date, créneau, package, vos informations puis le paiement — chaque étape validée ouvre la suivante, avec le suivi en haut de page.</p>
+
+  <ol class="stepper" id="stepper" aria-label="Progression de la réservation">
+    <li class="st cur" data-n="1"><span class="st-dot"><em>1</em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="st-lbl">Mode</span></li>
+    <li class="st" data-n="2"><span class="st-dot"><em>2</em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="st-lbl">Date</span></li>
+    <li class="st" data-n="3"><span class="st-dot"><em>3</em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="st-lbl">Créneau</span></li>
+    <li class="st" data-n="4"><span class="st-dot"><em>4</em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="st-lbl">Package</span></li>
+    <li class="st" data-n="5"><span class="st-dot"><em>5</em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="st-lbl">Infos</span></li>
+    <li class="st" data-n="6"><span class="st-dot"><em>6</em><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span class="st-lbl">Paiement</span></li>
+  </ol>
+
+  <div class="recap" id="recap" aria-live="polite"></div>
+
+  <form class="wizard" id="wizard" novalidate>
+
+    <section class="rz-step on" data-step="1">
+      <h2 class="step-title">Dans quel format voulez-vous passer en direct ?</h2>
+      <p class="step-hint">Deux formats, la même antenne : choisissez celui qui correspond à votre produit et à votre position.</p>
+      <div class="mode-cards" id="mode-cards">
+        <button type="button" class="mode-card" data-mode="presentiel">
+          <span class="mc-ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg></span>
+          <span class="mc-txt"><strong>Live en présentiel</strong><small>À Lomé, Togo — face à la régie House of Challenge</small></span>
+          <span class="mc-check" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        </button>
+        <button type="button" class="mode-card" data-mode="distance">
+          <span class="mc-ic" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+          <span class="mc-txt"><strong>Live à distance</strong><small>Depuis l'Afrique ou le monde, assistance technique à Lomé</small></span>
+          <span class="mc-check" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        </button>
+      </div>
+    </section>
+
+    <section class="rz-step" data-step="2">
+      <h2 class="step-title">Choisissez votre date</h2>
+      <p class="step-hint">Ouverture des réservations le 1er décembre 2026 — horaires en heure de Lomé (GMT+0).</p>
+      <div class="cal-box">
+        <div class="cal-head"><span class="cal-title">Décembre 2026</span><span class="cal-note">Lancement le 1er décembre</span></div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <span><i class="lg lg-av"></i>Disponible</span>
+          <span><i class="lg lg-near"></i>Presque complet</span>
+          <span><i class="lg lg-full"></i>Complet</span>
+          <span><i class="lg lg-closed"></i>Fermé</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="rz-step" data-step="3">
+      <h2 class="step-title">Choisissez votre créneau</h2>
+      <p class="step-hint" id="slot-day">Sélectionnez d'abord une date à l'étape précédente.</p>
+      <div class="slots" id="slots"></div>
+    </section>
+
+    <section class="rz-step" data-step="4">
+      <h2 class="step-title">Choisissez votre package</h2>
+      <p class="step-hint">Tarifs indicatifs, ajustables par l'équipe — paiements Mobile Money (T-Money, Flooz) ou carte bancaire.</p>
+      <div class="pk-grid" id="pk-grid"></div>
+    </section>
+
+    <section class="rz-step" data-step="5">
+      <h2 class="step-title">Vos informations</h2>
+      <p class="step-hint">La régie vous contacte sur WhatsApp pour préparer votre passage à l'antenne.</p>
+      <div class="fgrid">
+        <div class="field"><label for="f-name">Nom complet <b>*</b></label><input id="f-name" type="text" autocomplete="name" placeholder="Ex. Awa Kodjo"><p class="ferr"></p></div>
+        <div class="field"><label for="f-phone">Numéro WhatsApp <b>*</b></label><input id="f-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+228 90 12 34 56"><p class="ferr"></p></div>
+        <div class="field"><label for="f-email">E-mail <small>(pour la confirmation)</small></label><input id="f-email" type="email" autocomplete="email" placeholder="vous@exemple.com"><p class="ferr"></p></div>
+        <div class="field"><label for="f-product">Produit ou marque à présenter <b>*</b></label><input id="f-product" type="text" placeholder="Ex. savons artisanaux Néva"><p class="ferr"></p></div>
+        <div class="field f-full"><label for="f-msg">Message <small>(optionnel)</small></label><textarea id="f-msg" rows="3" placeholder="Précisez vos besoins, vos questions, votre disponibilité…"></textarea><p class="ferr"></p></div>
+      </div>
+    </section>
+
+    <section class="rz-step" data-step="6">
+      <h2 class="step-title">Paiement</h2>
+      <p class="step-hint">Réglez maintenant pour bloquer votre créneau — confirmation immédiate à la fin du paiement.</p>
+      <div class="pay-grid">
+        <div class="pay-left">
+          <div class="pm-list">
+            <button type="button" class="pm sel" data-pm="momo">
+              <span class="pm-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
+              <span class="pm-txt"><strong>Mobile Money</strong><small>T-Money ou Flooz</small></span>
+              <span class="pm-check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            </button>
+            <button type="button" class="pm" data-pm="card">
+              <span class="pm-ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+              <span class="pm-txt"><strong>Carte bancaire</strong><small>Visa · Mastercard</small></span>
+              <span class="pm-check" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            </button>
+          </div>
+          <div class="pm-panel on" id="panel-momo">
+            <div class="pills" id="momo-ops">
+              <button type="button" class="pill sel" data-op="T-Money">T-Money</button>
+              <button type="button" class="pill" data-op="Flooz">Flooz</button>
+            </div>
+            <div class="field"><label for="f-momo">Numéro Mobile Money <b>*</b></label><input id="f-momo" type="tel" inputmode="tel" placeholder="+228 90 12 34 56"><p class="ferr"></p></div>
+          </div>
+          <div class="pm-panel" id="panel-card">
+            <div class="field"><label for="f-card">Numéro de carte <b>*</b></label><input id="f-card" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242"><p class="ferr"></p></div>
+            <div class="fgrid">
+              <div class="field"><label for="f-exp">Expiration <b>*</b></label><input id="f-exp" inputmode="numeric" autocomplete="cc-exp" placeholder="MM/AA"><p class="ferr"></p></div>
+              <div class="field"><label for="f-cvc">CVC <b>*</b></label><input id="f-cvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="3"><p class="ferr"></p></div>
+            </div>
+            <div class="field"><label for="f-cname">Nom sur la carte <b>*</b></label><input id="f-cname" autocomplete="cc-name" placeholder="AWA KODJO"><p class="ferr"></p></div>
+          </div>
+        </div>
+        <aside class="pay-summary">
+          <h3>Récapitulatif</h3>
+          <div class="sum-rows" id="sum-rows"></div>
+          <div class="sum-total"><span>Total à payer</span><strong id="sum-total">—</strong></div>
+          <p class="sum-note">Votre créneau est bloqué dès la confirmation du paiement.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="rz-step rz-final" data-step="7">
+      <div class="final-check" aria-hidden="true"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h2 class="step-title">Réservation confirmée !</h2>
+      <p class="final-sub">Votre créneau est bloqué. La régie OCD Live vous contacte sur WhatsApp pour préparer votre passage à l'antenne.</p>
+      <p class="final-ref">Référence&nbsp;: <strong id="final-ref">OCD-······</strong></p>
+      <div class="final-sum" id="final-sum"></div>
+      <p class="final-note">Démonstration — paiement simulé, aucun débit réel n'a été effectué.</p>
+      <div class="final-actions">
+        <a class="btn btn-ghost" href="index.html">← Retour à l'accueil</a>
+        <a class="btn btn-primary" id="final-wa" href="https://wa.me/4917658443070" target="_blank" rel="noopener">Prévenir la régie sur WhatsApp</a>
+      </div>
+    </section>
+
+  </form>
+
+  <div class="wiz-nav" id="wiz-nav">
+    <button type="button" class="btn btn-ghost" id="btn-prev">← Étape précédente</button>
+    <button type="button" class="btn btn-primary" id="btn-next"><span class="bt-lbl">Continuer</span><span class="spinner" aria-hidden="true"></span></button>
+  </div>
+</main>
+
+<footer class="resa-foot">
+  <img src="assets/logo-ocd.png" alt="OCD Live">
+  <p>© 2026 OCD Live — Bovann · House of Challenge · BOVANN GROUP, Lomé (Togo).</p>
+</footer>
+
+<script src="js/resa.js"></script>
+</body>
+</html>

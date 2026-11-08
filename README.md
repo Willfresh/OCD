@@ -32,6 +32,7 @@ ocd-live-site/
 - **Tableau de bord régie** (`admin.html`) : connexion par code, statistiques d'activité, gestion complète des réservations (statut, contact WhatsApp, export CSV/JSON), gestion des créneaux (jours complets/fermés répercutés sur le calendrier public) et paramètres. Voir la section 4.
 - **Thème clair par défaut, thème sombre au choix** — bouton lune/soleil, choix mémorisé sur l'appareil, partagé entre toutes les pages.
 - **Responsive complet** — testé de 320 px à 1920 px : aucune coupure, aucun débordement.
+- **Menu mobile (burger)** — en dessous de 900 px, un bouton ≡ ouvre le menu plein écran : tous les liens de navigation, l'entrée « Espace régie » et le bouton « Réserver mon live ». Fermeture par le bouton (qui s'anime en croix), par un lien, ou par la touche Échap.
 - **Palette fidèle au logo** — couleurs échantillonnées du logo OCD (voir « Palette officielle »).
 - **Pré-sélection intelligente** — les boutons de l'accueil ouvrent la réservation avec le mode ou le package déjà choisi (ex. `reservation.html?mode=presentiel`).
 
@@ -102,7 +103,7 @@ Gestionnaire de fichiers ou FTP (FileZilla) → ouvrez `public_html` / `www` / `
 
 ## 4. Le tableau de bord régie (`admin.html`)
 
-L'espace d'administration de l'équipe House of Challenge. **Accès** : lien « Espace régie » dans le pied de page de l'accueil, ou ouvrez directement `admin.html`. **Code d'accès (démo) : `OCD2026`** — modifiable dans `js/admin.js` (constante `CODE`).
+L'espace d'administration de l'équipe House of Challenge. **Accès** : lien « Espace régie » dans le menu de navigation (desktop et menu mobile) et dans le pied de page de l'accueil, ou ouvrez directement `admin.html`. **Code d'accès (démo) : `OCD2026`** — modifiable dans `js/admin.js` (constante `CODE`).
 
 ### Ce qu'il contient
 
@@ -139,7 +140,7 @@ Ouvrez les fichiers dans un éditeur (VS Code…) et utilisez **Ctrl+F**.
 | `+49 176 584 43070` | Le même numéro, en version lisible dans le pied de page. |
 | `contact@ocdlive.com` | Adresse e-mail affichée dans le pied de page. |
 | `reservation.html?package=` (6 occurrences) | Les liens « Choisir » des 6 packages de l'accueil. |
-| `admin.html` | Le lien « Espace régie » du pied de page vers le tableau de bord. |
+| `admin.html` | Les liens « Espace régie » : menu de navigation, menu mobile et pied de page. |
 | `L'Opportunité C'est Dehors` | Le slogan, présent à plusieurs endroits. |
 
 ### Dans `js/resa.js` (réservation)

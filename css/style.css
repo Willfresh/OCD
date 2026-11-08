@@ -99,8 +99,49 @@ html[data-theme="light"] footer .brand-logo{filter:none}
 html[data-theme="dark"] .theme-btn .ic-sun{display:block}
 html[data-theme="dark"] .theme-btn .ic-moon{display:none}
 .btn-book{padding:10px 22px;font-size:.9rem}
+.nav-admin{display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:700;opacity:.82}
+@media(max-width:1120px){.nav-links{gap:16px}.nav-links a{font-size:.86rem}.nav-links .nav-admin{font-size:.8rem}}
 @media(max-width:899px){.nav-links{display:none}}
+
+/* ---------- Menu mobile (burger) ---------- */
+.menu-btn{display:none;width:42px;height:42px;border-radius:12px;border:1.5px solid var(--line);background:var(--chip-bg);cursor:pointer;position:relative;flex:none;padding:0;transition:border-color .3s}
+.menu-btn:hover{border-color:var(--orange)}
+.menu-btn span{position:absolute;left:50%;top:50%;width:19px;height:2px;border-radius:2px;background:var(--text);transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .25s}
+.menu-btn span:nth-child(1){transform:translate(-50%,-50%) translateY(-5px)}
+.menu-btn span:nth-child(2){transform:translate(-50%,-50%)}
+.menu-btn span:nth-child(3){transform:translate(-50%,-50%) translateY(5px)}
+.mobile-menu{display:none}
+@media(max-width:899px){
+.menu-btn{display:block}
+.mobile-menu{display:block;position:fixed;inset:0;z-index:99;padding:108px clamp(18px,5vw,30px) 34px;background:var(--bg);opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .35s ease,transform .35s ease,visibility .35s}
+body.menu-open .mobile-menu{opacity:1;visibility:visible;transform:none}
+body.menu-open{overflow:hidden}
+body.menu-open .site-header{background:var(--bg);border-bottom-color:var(--line)}
+body.menu-open .menu-btn span:nth-child(1){transform:translate(-50%,-50%) rotate(45deg)}
+body.menu-open .menu-btn span:nth-child(2){opacity:0}
+body.menu-open .menu-btn span:nth-child(3){transform:translate(-50%,-50%) rotate(-45deg)}
+.mm-links{display:grid;gap:4px}
+.mm-links a{display:flex;align-items:center;gap:11px;padding:15px 14px;border-radius:16px;text-decoration:none;color:var(--text);font-size:1.06rem;font-weight:800;border:1px solid transparent;transition:background .25s,border-color .25s,color .25s}
+.mm-links a:not(.mm-book):hover,.mm-links a:not(.mm-book):active{background:var(--kicker-bg);border-color:var(--soft-line);color:var(--accent-strong)}
+.mm-links .mm-admin{color:var(--muted);font-size:.95rem;font-weight:700}
+.mm-links .mm-admin svg{color:var(--accent-strong);flex:none}
+.mm-book{margin-top:12px;justify-content:center}
+.mm-foot{margin-top:26px;text-align:center;color:var(--muted);font-size:.74rem;letter-spacing:.04em}
+}
 @media(max-width:480px){.btn-book{padding:9px 15px;font-size:.84rem}.brand{font-size:1.15rem}}
+@media(max-width:430px){
+.main-nav{gap:10px}
+.btn-book{padding:8px 12px;font-size:.78rem}
+.brand{font-size:1.06rem}
+.brand-logo{height:26px}
+.menu-btn{width:40px;height:40px}
+}
+@media(max-width:360px){
+.site-header{padding-left:12px;padding-right:12px}
+.main-nav{gap:8px}
+.btn-book{padding:8px 10px;font-size:.74rem}
+.theme-btn{width:38px;height:38px}
+}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;padding:130px clamp(16px,4vw,48px) 90px}

@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Utilisateurs : VISITEUR (non connecté), VENDEUR, ADMIN (régie OCD Bovann)
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         String   @default("VENDOR")
+  country      String?
+  city         String?
+  avatarUrl    String?
+  isDemo       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions      Session[]
+  shop          Shop?
+  lives         LiveSubmission[]
+  subscriptions Subscription[]
+  payments      Payment[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Shop {
+  id          String   @id @default(cuid())
+  ownerId     String   @unique
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String   @unique
+  description String   @default("")
+  category    String
+  country     String
+  city        String
+  logoUrl     String?
+  bannerUrl   String?
+  whatsapp    String?
+  phone       String?
+  isActive    Boolean  @default(true)
+  isDemo      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  products Product[]
+  orders   Order[]
+  lives    LiveSubmission[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  name        String
+  description String   @default("")
+  price        Int
+  currency    String   @default("XOF")
+  category    String
+  images      String   @default("[]")
+  isFeatured  Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  isDemo      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orders Order[]
+}
+
+model LiveSubmission {
+  id             String    @id @default(cuid())
+  vendorId       String
+  vendor         User      @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  shopId         String?
+  shop           Shop?     @relation(fields: [shopId], references: [id], onDelete: SetNull)
+  displayName    String
+  country        String
+  category       String
+  mode           String    @default("distance")
+  platform       String    @default("tiktok")
+  liveUrl        String?
+  slot           String
+  scheduledDate  DateTime?
+  status         String    @default("PENDING")
+  rejectionReason String?
+  reviewNote     String?
+  reviewedById   String?
+  reviewedAt     DateTime?
+  photoUrl       String?
+  isDemo         Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  vendorId  String
+  vendor    User     @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  startDate DateTime
+  endDate   DateTime
+  amount    Int
+  currency  String   @default("XOF")
+  status    String   @default("ACTIVE")
+  method    String   @default("momo")
+  provider  String?
+  isDemo    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  payments Payment[]
+}
+
+model Payment {
+  id             String       @id @default(cuid())
+  vendorId       String
+  vendor         User         @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
+  purpose        String       @default("SUBSCRIPTION")
+  amount         Int
+  currency       String       @default("XOF")
+  method         String
+  provider       String?
+  reference      String       @unique
+  status         String       @default("SUCCESS")
+  createdAt      DateTime     @default(now())
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  shopId      String
+  shop        Shop     @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  buyerName   String
+  buyerPhone  String
+  buyerCountry String?
+  quantity    Int      @default(1)
+  message     String?
+  status      String   @default("NEW")
+  isDemo      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}

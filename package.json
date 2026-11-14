@@ -1,0 +1,38 @@
+{
+  "name": "ocd-live-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OCD Live & Shop — « L'Opportunité C'est Dehors » : plateforme africaine de lives marchands et de boutiques en ligne.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate || echo prisma generate skipped - create .env then run npm run db:push",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "prisma generate && tsx scripts/seed-demo.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.2",
+    "lucide-react": "^0.525.0",
+    "next": "^16.1.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^4.0.2",
+    "zustand": "^5.0.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^16.4.5",
+    "prisma": "^6.11.1",
+    "tailwindcss": "^4",
+    "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.19.0",
+    "tw-animate-css": "^1.3.5",
+    "typescript": "^5"
+  }
+}

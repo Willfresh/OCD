@@ -1,0 +1,26 @@
+# Dépendances et build
+/node_modules
+/.next
+/out
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# Base SQLite locale (jamais versionnée — les données se régénèrent avec db:seed)
+prisma/*.db
+prisma/*.db-journal
+/db
+
+# Environnement
+.env
+.env.local
+.env.production
+
+# Journaux et fichiers système
+*.log
+.DS_Store
+Thumbs.db
+
+# Éditeur
+.vscode
+.idea

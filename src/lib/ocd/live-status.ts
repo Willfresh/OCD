@@ -46,11 +46,45 @@ export function computeLiveStatus(live: LiveWithShop): LiveComputed {
   const startMin = slot.startH * 60
   const endMin = slot.endH * 60
 
-  // Lives récurrents quotidiens (données de démonstration) : fenêtre du jour
+  // Fenêtre du créneau aujourd'hui / déjà passée aujourd'hui
   const slotToday = nowMin >= startMin && nowMin < endMin
   const slotPast = nowMin >= endMin
   const hh = (h: number) => `${String(h).padStart(2, '0')}h00`
 
+  // 1) Live daté (soumission réelle) : la date prévue décide, AVANT la fenêtre du jour.
+  //    Sinon un live prévu dans trois semaines apparaîtrait « en direct » pendant
+  //    le créneau du matin — seule la récurrence quotidienne de démo est concernée.
+  if (live.scheduledDate) {
+    const schedDateKey = dateKeyInTz(live.scheduledDate, tz)
+    if (schedDateKey === now.dateKey) {
+      if (slotPast) return { live, status: 'ENDED', startsAtLabel: '', endsAtLabel: '' }
+      if (slotToday) {
+        return {
+          live,
+          status: 'LIVE',
+          startsAtLabel: `Depuis ${hh(slot.startH)}`,
+          endsAtLabel: `Jusqu'à ${hh(slot.endH)}`,
+        }
+      }
+      return {
+        live,
+        status: 'UPCOMING_TODAY',
+        startsAtLabel: `Aujourd'hui à ${hh(slot.startH)}`,
+        endsAtLabel: `Jusqu'à ${hh(slot.endH)}`,
+      }
+    }
+    if (schedDateKey < now.dateKey) {
+      // Date prévue révolue : la fiche expire et disparaît des lives actifs.
+      return { live, status: 'ENDED', startsAtLabel: '', endsAtLabel: '' }
+    }
+    const label = new Intl.DateTimeFormat('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+    }).format(live.scheduledDate)
+    return { live, status: 'UPCOMING', startsAtLabel: `${label} à ${hh(slot.startH)}`, endsAtLabel: `Jusqu'à ${hh(slot.endH)}` }
+  }
+
+  // 2) Lives récurrents quotidiens (données de démonstration) : fenêtre du jour
   if (slotToday) {
     return {
       live,
@@ -60,26 +94,7 @@ export function computeLiveStatus(live: LiveWithShop): LiveComputed {
     }
   }
 
-  // Live daté (soumission réelle) : vérifier la date prévue
-  if (live.scheduledDate) {
-    const schedDateKey = dateKeyInTz(live.scheduledDate, tz)
-    if (schedDateKey === now.dateKey) {
-      if (slotPast) return { live, status: 'ENDED', startsAtLabel: '', endsAtLabel: '' }
-      return {
-        live,
-        status: 'UPCOMING_TODAY',
-        startsAtLabel: `Aujourd'hui à ${hh(slot.startH)}`,
-        endsAtLabel: `Jusqu'à ${hh(slot.endH)}`,
-      }
-    }
-    const label = new Intl.DateTimeFormat('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-    }).format(live.scheduledDate)
-    return { live, status: 'UPCOMING', startsAtLabel: `${label} à ${hh(slot.startH)}`, endsAtLabel: `Jusqu'à ${hh(slot.endH)}` }
-  }
-
-  // Récurrent quotidien : prochaine session (aujourd'hui ou demain)
+  // Prochaine session (aujourd'hui ou demain)
   if (slotPast) {
     return {
       live,

@@ -1938,6 +1938,140 @@ html[data-theme="dark"] .flag {
   background: var(--kicker-bg);
   box-shadow: 0 18px 44px var(--glow);
 }
+/* ---------- Calendrier de réservation (choix du jour du live) ---------- */
+.cal {
+  margin-top: 18px;
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 20px;
+  padding: 16px 16px 12px;
+}
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.cal-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: capitalize;
+  color: var(--text);
+}
+.cal-nav {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  transition: border-color 0.25s, color 0.25s;
+}
+.cal-nav:hover:not(:disabled) {
+  border-color: var(--orange);
+  color: var(--accent-text);
+}
+.cal-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal-dow {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted-ink);
+  padding: 4px 0;
+}
+.cal-day {
+  position: relative;
+  height: 38px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.86rem;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.cal-day.cal-empty {
+  cursor: default;
+}
+.cal-day:hover:not(:disabled):not(.sel):not(.cal-empty) {
+  border-color: var(--orange);
+}
+.cal-day:disabled {
+  color: var(--muted-ink);
+  opacity: 0.38;
+  cursor: default;
+}
+.cal-day.sel {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #0A0908;
+  font-weight: 900;
+}
+.cal-day.today:not(.sel)::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.cal-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin: 12px 2px 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted-ink);
+}
+.cal-legend .cal-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orange);
+  margin-right: 5px;
+  vertical-align: 0;
+}
+.cal-legend .cal-dot-sel {
+  background: var(--orange);
+  box-shadow: 0 0 0 2px var(--card), 0 0 0 3.5px var(--orange);
+}
+.cal-legend .cal-max {
+  margin-left: auto;
+}
+@media (max-width: 480px) {
+  .cal-legend .cal-max {
+    margin-left: 0;
+  }
+  .cal-day {
+    height: 36px;
+    font-size: 0.82rem;
+  }
+}
 /* ---------- Grilles de formulaires / filtres ----------
    Deux colonnes par défaut ; .f-full occupe toute la largeur.
    Les gabarits spécifiques passent par un style inline (gridTemplateColumns). */

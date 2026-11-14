@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useApp, api } from './store'
 import { Flag } from './Flag'
 import { CatIcon, PlatformIcon } from './icons'
+import { OcdDatePicker } from './datepicker'
 import {
   CATEGORIES,
   COUNTRIES,
@@ -16,10 +17,23 @@ import {
 
 const STEPS = ['Mode', 'Créneau', 'Pays', 'Commerce', 'Lien', 'Envoi']
 
-// Jour ISO (yyyy-mm-dd) relatif à aujourd'hui, décalé selon le fuseau du pays choisi
+// Jour ISO (yyyy-mm-dd) en date locale, décalé d'un nombre de jours donné
+const pad = (n: number) => String(n).padStart(2, '0')
 function isoDay(offset: number) {
-  const d = new Date(Date.now() + offset * 86400000)
-  return d.toISOString().slice(0, 10)
+  const d = new Date()
+  d.setDate(d.getDate() + offset)
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+}
+
+// Libellé lisible du jour choisi (raccourcis aujourd'hui / demain, sinon date complète)
+function fmtDay(iso: string) {
+  if (iso === isoDay(0)) return "aujourd'hui"
+  if (iso === isoDay(1)) return 'demain'
+  return new Intl.DateTimeFormat('fr-FR', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  }).format(new Date(iso + 'T12:00:00'))
 }
 
 export function SubmitView() {
@@ -73,7 +87,7 @@ export function SubmitView() {
     setErr('')
     if (step === 1 && !form.mode) return setErr('Choisissez le format de votre live.')
     if (step === 2 && !form.slot) return setErr('Choisissez votre créneau.')
-    if (step === 2 && !form.date) return setErr('Choisissez le jour de votre live (aujourd\'hui ou demain).')
+    if (step === 2 && !form.date) return setErr('Choisissez le jour de votre live dans le calendrier.')
     if (step === 3 && !form.country) return setErr('Choisissez votre pays.')
     if (step === 4 && (form.displayName.trim().length < 2 || !form.category)) {
       return setErr('Indiquez votre nom ou celui de votre commerce, et choisissez une catégorie.')
@@ -219,7 +233,12 @@ export function SubmitView() {
         {form.mode && (
           <span className="chip"><span className="ck" style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--orange)' }} />{form.mode === 'presentiel' ? 'En présentiel' : 'À distance'}</span>
         )}
-        {form.slot && <span className="chip">{form.slot === 'MATIN' ? 'Matin 08h–11h' : 'Soir 18h–21h'}{form.date ? ` · ${form.date === isoDay(0) ? "aujourd'hui" : form.date === isoDay(1) ? 'demain' : form.date}` : ''}</span>}
+        {form.slot && (
+          <span className="chip">
+            {form.slot === 'MATIN' ? 'Matin 08h–11h' : 'Soir 18h–21h'}
+            {form.date ? ` · ${fmtDay(form.date)}` : ''}
+          </span>
+        )}
         {form.country && <span className="chip">{COUNTRY_MAP[form.country]?.name}</span>}
         {form.category && <span className="chip">{CATEGORIES.find((c) => c.id === form.category)?.label}</span>}
         {form.displayName && <span className="chip">{form.displayName}</span>}
@@ -246,7 +265,7 @@ export function SubmitView() {
       {/* ---------- Étape 2 : créneau ---------- */}
       <section className={`rz-step ${step === 2 ? 'on' : ''}`}>
         <h2 className="step-title">Choisissez votre créneau</h2>
-        <p className="step-hint">Deux créneaux commerciaux par jour — l&apos;heure est celle de votre pays.</p>
+        <p className="step-hint">Deux créneaux commerciaux par jour — l&apos;heure est celle de votre pays. Réservez la date de votre choix dans le calendrier, jusqu&apos;à deux mois à l&apos;avance.</p>
         <div className="slot-cards">
           {SLOTS.map((s) => (
             <button key={s.id} type="button" className={`slot-card ${form.slot === s.id ? 'sel' : ''}`} onClick={() => set('slot', s.id)}>
@@ -261,7 +280,11 @@ export function SubmitView() {
           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--muted-ink)', alignSelf: 'center' }}>Jour&nbsp;:</span>
           <button type="button" className={`pill ${form.date === isoDay(0) ? 'sel' : ''}`} onClick={() => set('date', isoDay(0))}>Aujourd&apos;hui</button>
           <button type="button" className={`pill ${form.date === isoDay(1) ? 'sel' : ''}`} onClick={() => set('date', isoDay(1))}>Demain</button>
+          {form.date && form.date !== isoDay(0) && form.date !== isoDay(1) && (
+            <button type="button" className="pill sel" title="Choisir un autre jour" onClick={() => set('date', '')}>{fmtDay(form.date)}</button>
+          )}
         </div>
+        <OcdDatePicker value={form.date} onChange={(iso) => set('date', iso)} maxDays={60} />
       </section>
 
       {/* ---------- Étape 3 : pays ---------- */}
